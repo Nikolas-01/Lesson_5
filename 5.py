@@ -1,30 +1,48 @@
-# Проверка числа на простоту
+# 1) проверка числа на простоту. Все функции модуля принимают на вход натуральные числа от 1 до 1000.
 
+from math import sqrt
 
-def prime_num(n):
-    if n == 1:
+def num_simple(n):
+    if n <= 1:
         return False
-    for i in range(2, n + 1):
-        if n % i == 0 and i == n:
-            return True
-        elif n % i == 0 and i != n:
+    i = 2
+    while i <= sqrt(n):
+        if n % i == 0:
             return False
+        i += 1
+    return True
 
+n = int(input('Input natural number '))
+print('1) проверка числа на простоту\n', num_simple(n))
 
-# выводит список всех делителей числа
-def get_divisors(n):
-    lst_divisors = []
+# 2) выводит список всех делителей числа;
+# def num_divisors(n):
+#     result = []
+#     i = 1
+#     while i <= sqrt(n):
+#         if n % i == 0:
+#             if (n / i) % i == i:
+#                 result.append(i)
+#             else:
+#                 result.extend([i, n // i])
+#         i += 1
+#     result.sort()
+#     return result
+def num_divisors(n):
+    result = []
     for i in range(1, n + 1):
         if n % i == 0:
-            lst_divisors.append(i)
-    return lst_divisors
+            result.append(i)
+    return result
 
 
-# выводит самый большой простой делитель числа
-def get_max_prime(n):
-    lst_max_prime = []
-    lst_divs = get_divisors(n)
-    for i in lst_divs:
-        if prime_num(i):
-            lst_max_prime.append(i)
-    return max(lst_max_prime)
+print('2) выводит список всех делителей числа\n', num_divisors(n))
+
+# 3) выводит самый большой простой делитель числа.
+def num_max_divisor(n):
+    if n == 1:
+        return None
+    return max(list(filter(num_simple, num_divisors(n))))
+
+
+print('3) выводим самый большой простой делитель числа\n', num_max_divisor(n))
